@@ -10,15 +10,14 @@ class Insurance_Prediction:
     def __init__(self):
 
         BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
         model_path = os.path.join(BASE_DIR, "artifacts", "model.pkl")
-        scaler_path = os.path.join(BASE_DIR, "artifacts", "scaler.pkl")
 
-        with open(model_path, "rb") as file:
-            self.model = pickle.load(file)
-
-        with open(scaler_path, "rb") as file:
-            self.scaler = pickle.load(file)
+        try:
+            with open(model_path, "rb") as file:
+                self.model = pickle.load(file)
+        except Exception as e:
+            print("MODEL LOAD ERROR:", e)
+            raise e
 
     def prediction(self, Age, Annual_Income_LPA, Policy_Term_Years, Sum_Assured_Lakhs):
 
